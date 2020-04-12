@@ -1,8 +1,8 @@
 /*
-* Copyright (c) 2016-present, Ken Hibino.
-* Licensed under the MIT License (MIT).
-* See https://kenny-hibino.github.io/react-places-autocomplete
-*/
+ * Copyright (c) 2016-present, Ken Hibino.
+ * Licensed under the MIT License (MIT).
+ * See https://kenny-hibino.github.io/react-places-autocomplete
+ */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -125,10 +125,10 @@ class PlacesAutocomplete extends React.Component {
     });
   };
 
-  handleSelect = (address, placeId) => {
+  handleSelect = (address, placeId, suggestion) => {
     this.clearSuggestions();
     if (this.props.onSelect) {
-      this.props.onSelect(address, placeId);
+      this.props.onSelect(address, placeId, suggestion);
     } else {
       this.props.onChange(address);
     }
@@ -156,7 +156,11 @@ class PlacesAutocomplete extends React.Component {
     if (activeSuggestion === undefined) {
       this.handleSelect(this.props.value, null);
     } else {
-      this.handleSelect(activeSuggestion.description, activeSuggestion.placeId);
+      this.handleSelect(
+        activeSuggestion.description,
+        activeSuggestion.placeId,
+        activeSuggestion
+      );
     }
   };
 
@@ -347,7 +351,7 @@ class PlacesAutocomplete extends React.Component {
       event.preventDefault();
     }
     const { description, placeId } = suggestion;
-    this.handleSelect(description, placeId);
+    this.handleSelect(description, placeId, suggestion);
     setTimeout(() => {
       this.mousedownOnSuggestion = false;
     });
